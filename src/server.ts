@@ -1,7 +1,7 @@
 import express, { NextFunction, Request, Response } from "express";
 import router from "./router";
 import morgan from "morgan";
-import { CustomRequest } from "./types";
+import { protect } from "./modules/auth";
 
 const app = express();
 
@@ -32,6 +32,6 @@ app.get("/", (_req, res) => {
   });
 });
 
-app.use("/api", router);
+app.use("/api", protect, router);
 
 export default app;

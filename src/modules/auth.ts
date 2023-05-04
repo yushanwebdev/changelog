@@ -1,3 +1,4 @@
+import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
 interface IUser {
@@ -15,4 +16,16 @@ export const createJWT = (user: IUser) => {
   );
 
   return token;
+};
+
+export const protect = (req: Request, res: Response, next: NextFunction) => {
+  const bearer = req.headers.authorization;
+
+  if (!bearer) {
+    res.status(401);
+    res.json({
+      message: "not authorized",
+    });
+    return;
+  }
 };
