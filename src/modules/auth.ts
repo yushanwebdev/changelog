@@ -1,11 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { ICustomRequest } from "../types";
-
-interface IUser {
-  id: string;
-  username: string;
-}
+import { ICustomRequest, IUser } from "../types";
+import bcrypt from "bcrypt";
 
 export const createJWT = (user: IUser) => {
   const token = jwt.sign(
@@ -51,4 +47,12 @@ export const protect = (req: Request, res: Response, next: NextFunction) => {
     });
     return;
   }
+};
+
+export const comparePasswords = (password: string, hash: string) => {
+  return bcrypt.compare(password, hash);
+};
+
+export const hashPassword = (password: string) => {
+  return bcrypt.hash(password, 5);
 };
