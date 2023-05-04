@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { CustomRequest } from "./types";
 
 const router = Router();
 
