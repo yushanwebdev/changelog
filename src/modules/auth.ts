@@ -26,7 +26,7 @@ export const protect = (req: Request, res: Response, next: NextFunction) => {
     return;
   }
 
-  const [, token] = bearer.split("");
+  const [, token] = bearer.split(" ");
 
   if (!token) {
     res.status(401);
@@ -38,6 +38,7 @@ export const protect = (req: Request, res: Response, next: NextFunction) => {
 
   try {
     const user = jwt.verify(token, process.env.JWT_SECRET!) as IUser;
+
     (req as ICustomRequest).user = user;
     next();
   } catch (error) {

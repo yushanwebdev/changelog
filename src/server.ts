@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response } from "express";
 import router from "./router";
 import morgan from "morgan";
 import { protect } from "./modules/auth";
+import { createNewUser, signin } from "./handlers/user";
 
 const app = express();
 
@@ -33,5 +34,8 @@ app.get("/", (_req, res) => {
 });
 
 app.use("/api", protect, router);
+
+app.use("/user", createNewUser);
+app.use("/signin", signin);
 
 export default app;
