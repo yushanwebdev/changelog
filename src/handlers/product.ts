@@ -49,11 +49,11 @@ export const createProduct = async (req: Request, res: Response) => {
 };
 
 // Update Product
-export const updateProduct = async (req: ICustomRequest, res: Response) => {
+export const updateProduct = async (req: Request, res: Response) => {
   const updated = await prisma.product.update({
     where: {
       id_belongsToId: {
-        belongsToId: req.user.id,
+        belongsToId: (req as ICustomRequest).user.id,
         id: req.params.id,
       },
     },
@@ -68,11 +68,11 @@ export const updateProduct = async (req: ICustomRequest, res: Response) => {
 };
 
 // Delete Product
-export const deleteProduct = async (req: ICustomRequest, res: Response) => {
+export const deleteProduct = async (req: Request, res: Response) => {
   const deleted = await prisma.product.delete({
     where: {
       id_belongsToId: {
-        belongsToId: req.user.id,
+        belongsToId: (req as ICustomRequest).user.id,
         id: req.params.id,
       },
     },
