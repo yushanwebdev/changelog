@@ -33,3 +33,52 @@ export const getOneProduct = async (req: ICustomRequest, res: Response) => {
     data: product,
   });
 };
+
+// Create Product
+export const createProduct = async (req: ICustomRequest, res: Response) => {
+  const product = await prisma.product.create({
+    data: {
+      name: req.body.name,
+      belongsToId: req.user.id,
+    },
+  });
+
+  res.json({
+    data: product,
+  });
+};
+
+// Update Product
+export const updateProduct = async (req: ICustomRequest, res: Response) => {
+  const updated = await prisma.product.update({
+    where: {
+      id_belongsToId: {
+        belongsToId: req.user.id,
+        id: req.params.id,
+      },
+    },
+    data: {
+      name: req.body.name,
+    },
+  });
+
+  res.json({
+    data: updated,
+  });
+};
+
+// Delete Product
+export const deleteProduct = async (req: ICustomRequest, res: Response) => {
+  const deleted = await prisma.product.delete({
+    where: {
+      id_belongsToId: {
+        belongsToId: req.user.id,
+        id: req.params.id,
+      },
+    },
+  });
+
+  res.json({
+    data: deleted,
+  });
+};
