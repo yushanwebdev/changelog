@@ -57,7 +57,6 @@ export const createUpdate = async (req: Request, res: Response) => {
       title: req.body.title,
       body: req.body.body,
       productId: product.id,
-      updatedAt: new Date(),
     },
   });
 
@@ -92,7 +91,6 @@ export const updateUpdate = async (req: Request, res: Response) => {
     data: {
       title: req.body.title,
       body: req.body.body,
-      updatedAt: new Date(),
       status: req.body.status,
       version: req.body.version,
     },
