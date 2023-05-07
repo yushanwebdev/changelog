@@ -38,8 +38,11 @@ app.use("/api", protect, router);
 app.use("/user", createNewUser);
 app.use("/signin", signin);
 
-app.get("/test", (_req, res) => {
-  throw new Error("Something went wrong");
+app.get("/test", (_req, _res, next) => {
+  // throw new Error("Something went wrong");
+  setTimeout(() => {
+    next(new Error("Something went wrong"));
+  }, 1);
 });
 
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
