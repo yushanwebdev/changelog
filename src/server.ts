@@ -38,4 +38,16 @@ app.use("/api", protect, router);
 app.use("/user", createNewUser);
 app.use("/signin", signin);
 
+app.get("/test", (_req, res) => {
+  throw new Error("Something went wrong");
+});
+
+app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
+  console.log(err);
+  res.status(500);
+  res.json({
+    error: err.message,
+  });
+});
+
 export default app;
