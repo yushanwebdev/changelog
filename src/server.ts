@@ -3,6 +3,8 @@ import router from "./router";
 import morgan from "morgan";
 import { protect } from "./modules/auth";
 import { createNewUser, signin } from "./handlers/user";
+import { body } from "express-validator";
+import { handleInputErrors } from "./modules/middleware";
 
 const app = express();
 
@@ -35,7 +37,13 @@ app.get("/", (_req, res) => {
 
 app.use("/api", protect, router);
 
-app.use("/user", createNewUser);
+app.use(
+  "/user",
+  body("username").isString(),
+  body("password").isString(),
+  handleInputErrors,
+  createNewUser
+);
 app.use("/signin", signin);
 
 app.get("/test", (_req, _res, next) => {
@@ -46,11 +54,19 @@ app.get("/test", (_req, _res, next) => {
 });
 
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
-  console.log(err);
-  res.status(500);
-  res.json({
-    error: err.message,
-  });
+  if (err.cause === "auth") {
+    res.status(401).json({
+      message: "unauthorized",
+    });
+  } else if (err.cause === "input") {
+    res.status(400).json({
+      message: "invalid input",
+    });
+  } else {
+    res.status(500).json({
+      message: "oops, that's on us",
+    });
+  }
 });
 
 export default app;

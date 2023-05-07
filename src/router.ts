@@ -49,6 +49,7 @@ router.put(
   body("body").optional(),
   body("status").isIn(["IN_PROGRESS", "SHIPPED", "DEPRECATED"]),
   body("version").optional(),
+  handleInputErrors,
   updateUpdate
 );
 router.post(
@@ -56,6 +57,7 @@ router.post(
   body("title").exists().isString(),
   body("body").exists().isString(),
   body("productId").exists().isUUID(),
+  handleInputErrors,
   createUpdate
 );
 router.delete("/update/:id", deleteUpdate);
@@ -69,6 +71,7 @@ router.put(
   "/updatepoint/:id",
   body("name").optional().isString(),
   body("description").optional().isString(),
+  handleInputErrors,
   () => {}
 );
 router.post(
@@ -76,6 +79,7 @@ router.post(
   body("name").isString(),
   body("description").isString(),
   body("updateId").exists().isString(),
+  handleInputErrors,
   () => {}
 );
 router.delete("/updatepoint/:id", () => {});
