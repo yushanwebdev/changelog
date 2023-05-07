@@ -31,7 +31,7 @@ app.get("/", (_req, res) => {
   console.log("hello from Express");
   res.status(200);
   res.json({
-    message: "Hello",
+    message: "nope",
   });
 });
 
